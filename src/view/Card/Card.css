@@ -1,0 +1,19 @@
+.card{
+    margin: 10px 0;
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    border: 2px solid #ff6600bd;
+    border-radius: 20px;
+    padding: 15px 0;
+    font-size: 22px;
+}
+.card p{
+  pointer-events: none;
+}
+.card.checked{
+  background-color: #fff2af;
+}
