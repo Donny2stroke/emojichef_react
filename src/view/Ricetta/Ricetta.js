@@ -2,11 +2,25 @@ import React, {useContext, useEffect, useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark  } from '@fortawesome/free-solid-svg-icons'
 import ricettaTest from '../../images/testRicetta.jpg'
+import caricamento from '../../images/loader.gif'
 import './Ricetta.css'
 import { AppContext } from '../App/App';
 
 export default function Ricetta() {
   const contextValue = useContext(AppContext);
+
+  const [divCaricamento, setDivCaricamento] = useState (true);
+
+  useEffect(() => {
+    if(contextValue.modaleRicetta.aperturaRicetta){
+      setTimeout(()=>{
+        setDivCaricamento(false);
+      }, 3000);
+    }else{
+      setDivCaricamento(true);
+    }
+  }, [contextValue.modaleRicetta.aperturaRicetta])
+  
 
   function chiudiRicetta(){
     contextValue.modaleRicetta.setAperturaRicetta(0);
@@ -17,6 +31,14 @@ export default function Ricetta() {
     <div className={contextValue.modaleRicetta.aperturaRicetta ? 'ricetta visibile':'ricetta'}>
         <div onClick={chiudiRicetta} class="chiusuraRicetta"><FontAwesomeIcon icon={faXmark} /></div>    
         <div className='contenutoRicetta'>
+          <div className={divCaricamento ? 'caricamento visibile' : 'caricamento'}>
+            <img src={caricamento}/>
+            <h1>Caricamento
+                <span className="dot-one"> .</span>
+                <span className="dot-two"> .</span>
+                <span className="dot-three"> .</span>
+            </h1>
+          </div>
           <div className='contenutoFotoRicetta'>
             <img src={ricettaTest}/>
           </div>
