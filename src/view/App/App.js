@@ -11,13 +11,17 @@ function App() {
   const [bottoneDisabilitato, setBottoneDisabilitato] = useState(true);
   const statoSelezionati = {ingredientiSelezionati, setIngredientiSelezionati};
   const statoBottone = {bottoneDisabilitato, setBottoneDisabilitato};
-  const contextValue = {statoSelezionati, statoBottone}
+
+  const [aperturaRicetta, setAperturaRicetta] = useState(0);
+  const modaleRicetta = {aperturaRicetta, setAperturaRicetta};
+  const contextValue = {statoSelezionati, statoBottone, modaleRicetta}
 
   function ottieniRicetta(){
     if(ingredientiSelezionati < 3){
       alert("Seleziona 3 elementi");
     }else{
-      alert("OK")
+      setAperturaRicetta(1);
+      setBottoneDisabilitato(true);
     }
   }
 
