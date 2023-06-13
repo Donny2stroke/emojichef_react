@@ -2,6 +2,7 @@ import React, {createContext, useState} from 'react';
 import logo from '../../images/logo.svg';
 import './App.css';
 import Card from '../Card/Card'
+import Ricetta from '../Ricetta/Ricetta';
 
 export const AppContext = createContext(); 
 
@@ -36,6 +37,7 @@ function App() {
           <Card id="carne" icona="🥩"/>
         </div>
         <button disabled={bottoneDisabilitato} onClick={ottieniRicetta}>Genera ricetta</button>
+        <Ricetta />
       </div>
     </AppContext.Provider>
   );
