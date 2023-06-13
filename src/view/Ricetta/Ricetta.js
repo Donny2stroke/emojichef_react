@@ -9,15 +9,14 @@ import { AppContext } from '../App/App';
 export default function Ricetta() {
   const contextValue = useContext(AppContext);
 
-  const [divCaricamento, setDivCaricamento] = useState (true);
+  const [divCaricamento, setDivCaricamento] = useState (false);
 
   useEffect(() => {
     if(contextValue.modaleRicetta.aperturaRicetta){
+      setDivCaricamento(true);
       setTimeout(()=>{
         setDivCaricamento(false);
       }, 3000);
-    }else{
-      setDivCaricamento(true);
     }
   }, [contextValue.modaleRicetta.aperturaRicetta])
   
