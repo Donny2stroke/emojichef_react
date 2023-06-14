@@ -27,7 +27,7 @@ export default function Ricetta() {
   }
 
   return (
-    <div className={contextValue.modaleRicetta.aperturaRicetta ? 'ricetta visibile':'ricetta'}>
+    <div className={contextValue.modaleRicetta.aperturaRicetta ? divCaricamento ? 'ricetta visibile noscroll': 'ricetta visibile' : divCaricamento ? 'ricetta noscroll': 'ricetta'}>
         <div onClick={chiudiRicetta} class="chiusuraRicetta"><FontAwesomeIcon icon={faXmark} /></div>    
         <div className='contenutoRicetta'>
           <div className={divCaricamento ? 'caricamento visibile' : 'caricamento'}>

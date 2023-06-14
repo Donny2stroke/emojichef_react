@@ -13,6 +13,9 @@
     top: 50px;
     opacity: 1;
 }
+.ricetta.visibile.noscroll{
+  overflow-y: hidden;
+}
 .chiusuraRicetta {
     position: absolute;
     right: 10px;
