@@ -8,10 +8,10 @@ import { AppContext } from '../App/App';
 import { Configuration, OpenAIApi } from 'openai';
 
 export default function Ricetta() {
-  const configuration = new Configuration({
+  /* const configuration = new Configuration({
     apiKey: process.env.REACT_APP_OPENAI_API_KEY,
   });
-  const openai = new OpenAIApi(configuration);
+  const openai = new OpenAIApi(configuration); */
 
   const [divCaricamento, setDivCaricamento] = useState (false);
 
@@ -21,7 +21,7 @@ export default function Ricetta() {
 
   const contextValue = useContext(AppContext);
 
-  const handleSubmit = async () => {
+  /* const handleSubmit = async () => {
     setDivCaricamento(true);
     try {
       const result = await openai.createCompletion({
@@ -37,22 +37,36 @@ export default function Ricetta() {
       setApiResponse("Something is going wrong, Please try again.");
     }
     setDivCaricamento(false);
-  };
+  }; */
+
+  function callApi() {
+    let data = '';
+    fetch('https://www.themealdb.com/api/json/v1/1/random.php', { method: 'GET' })
+      .then(data => data.json()) // Parsing the data into a JavaScript object
+      .then(json => setApiResponse(JSON.stringify(json))) // Displaying the stringified data in an alert popup
+  }
+
+  const ricettaTestTxt = async() => {
+    setDivCaricamento(true);
+    callApi();
+    setDivCaricamento(false);
+  }
 
 
   useEffect(() => {
     if(contextValue.modaleRicetta.aperturaRicetta){
-      setPrompt('crea una semplice ricetta (testo wrappato in tag p e se usi elenchi puntati usa il tag ul. Il titolo in un h1 e i sottotitoli come "ingredienti", "Istruzioni" ecc in h2 senza apertura di html, body ecc. Solo la parte del testo) senza commenti ne prima ne dopo (solo il testo della ricetta) con questi ingredienti: 🍎🥩🥦')
-      console.log(prompt);
+      //setPrompt('crea una semplice ricetta (testo wrappato in tag p e se usi elenchi puntati usa il tag ul. Il titolo in un h1 e i sottotitoli come "ingredienti", "Istruzioni" ecc in h2 senza apertura di html, body ecc. Solo la parte del testo) senza commenti ne prima ne dopo (solo il testo della ricetta) con questi ingredienti: 🍎🥩🥦')
+      //console.log(prompt);
       //handleSubmit();
+      ricettaTestTxt();
     }
   }, [contextValue.modaleRicetta.aperturaRicetta])
 
-  useEffect(() => {
+/*   useEffect(() => {
     if(prompt){
-      handleSubmit();
+      ricettaTestTxt();
     }
-  }, [prompt])
+  }, [prompt]) */
   
 
   function chiudiRicetta(){
