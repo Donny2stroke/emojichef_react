@@ -5,20 +5,68 @@ import ricettaTest from '../../images/testRicetta.jpg'
 import caricamento from '../../images/loader.gif'
 import './Ricetta.css'
 import { AppContext } from '../App/App';
+import { Configuration, OpenAIApi } from 'openai';
 
 export default function Ricetta() {
-  const contextValue = useContext(AppContext);
+  /* const configuration = new Configuration({
+    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+  });
+  const openai = new OpenAIApi(configuration); */
 
   const [divCaricamento, setDivCaricamento] = useState (false);
 
+  const [prompt, setPrompt] = useState("");
+  const [apiResponse, setApiResponse] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const contextValue = useContext(AppContext);
+
+  /* const handleSubmit = async () => {
+    setDivCaricamento(true);
+    try {
+      const result = await openai.createCompletion({
+        model: "text-davinci-003",
+        prompt: prompt,
+        temperature: 0.5,
+        max_tokens: 50,
+      });
+      //console.log("response", result.data.choices[0].text);
+      setApiResponse(result.data.choices[0].text);
+    } catch (e) {
+      //console.log(e);
+      setApiResponse("Something is going wrong, Please try again.");
+    }
+    setDivCaricamento(false);
+  }; */
+
+  function callApi() {
+    let data = '';
+    fetch('https://www.themealdb.com/api/json/v1/1/random.php', { method: 'GET' })
+      .then(data => data.json()) // Parsing the data into a JavaScript object
+      .then(json => setApiResponse(JSON.stringify(json))) // Displaying the stringified data in an alert popup
+  }
+
+  const ricettaTestTxt = async() => {
+    setDivCaricamento(true);
+    callApi();
+    setDivCaricamento(false);
+  }
+
+
   useEffect(() => {
     if(contextValue.modaleRicetta.aperturaRicetta){
-      setDivCaricamento(true);
-      setTimeout(()=>{
-        setDivCaricamento(false);
-      }, 3000);
+      //setPrompt('crea una semplice ricetta (testo wrappato in tag p e se usi elenchi puntati usa il tag ul. Il titolo in un h1 e i sottotitoli come "ingredienti", "Istruzioni" ecc in h2 senza apertura di html, body ecc. Solo la parte del testo) senza commenti ne prima ne dopo (solo il testo della ricetta) con questi ingredienti: 🍎🥩🥦')
+      //console.log(prompt);
+      //handleSubmit();
+      ricettaTestTxt();
     }
   }, [contextValue.modaleRicetta.aperturaRicetta])
+
+/*   useEffect(() => {
+    if(prompt){
+      ricettaTestTxt();
+    }
+  }, [prompt]) */
   
 
   function chiudiRicetta(){
@@ -28,7 +76,7 @@ export default function Ricetta() {
 
   return (
     <div className={contextValue.modaleRicetta.aperturaRicetta ? divCaricamento ? 'ricetta visibile noscroll': 'ricetta visibile' : divCaricamento ? 'ricetta noscroll': 'ricetta'}>
-        <div onClick={chiudiRicetta} class="chiusuraRicetta"><FontAwesomeIcon icon={faXmark} /></div>    
+        <div onClick={chiudiRicetta} className="chiusuraRicetta"><FontAwesomeIcon icon={faXmark} /></div>    
         <div className='contenutoRicetta'>
           <div className={divCaricamento ? 'caricamento visibile' : 'caricamento'}>
             <img src={caricamento}/>
@@ -42,7 +90,8 @@ export default function Ricetta() {
             <img src={ricettaTest}/>
           </div>
           <div className='contenutoTestoRicetta'>
-            <h1>Sauté di mele, bistecca e broccoli</h1>
+            {apiResponse}
+  {/*           <h1>Sauté di mele, bistecca e broccoli</h1>
             <h2>Ingredienti:</h2>
             <ul>
               <li><p>&#x1F34E; 1 mela verde</p></li>
@@ -60,7 +109,7 @@ export default function Ricetta() {
               <li><p>Aggiungi le cimette di broccoli nella padella e cuocile per circa 5 minuti, finché non diventano tenere ma croccanti. Aggiusta di sale e pepe.</p></li>
               <li><p>Unisci le fette di mela e la bistecca di manzo alla padella con i broccoli. Mescola delicatamente per far amalgamare i sapori e cuoci per altri 1-2 minuti, finché tutti gli ingredienti sono ben riscaldati.</p></li>
               <li><p>Togli dal fuoco e servi il tuo sauté di mele, bistecca e broccoli caldo. Puoi accompagnarlo con riso o patate se desideri un piatto più sostanzioso.</p></li>
-            </ol>
+            </ol> */}
           </div>
         </div>
     </div>
