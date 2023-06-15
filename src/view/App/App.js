@@ -4,16 +4,20 @@ import './App.css';
 import Card from '../Card/Card'
 import Ricetta from '../Ricetta/Ricetta';
 
+
 export const AppContext = createContext(); 
 
 function App() {
+  
   const [ingredientiSelezionati, setIngredientiSelezionati] = useState(0);
   const [bottoneDisabilitato, setBottoneDisabilitato] = useState(true);
   const statoSelezionati = {ingredientiSelezionati, setIngredientiSelezionati};
   const statoBottone = {bottoneDisabilitato, setBottoneDisabilitato};
-
   const [aperturaRicetta, setAperturaRicetta] = useState(0);
   const modaleRicetta = {aperturaRicetta, setAperturaRicetta};
+
+
+
   const contextValue = {statoSelezionati, statoBottone, modaleRicetta}
 
   function ottieniRicetta(){
